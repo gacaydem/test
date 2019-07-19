@@ -1,11 +1,11 @@
-import pandas as pd
-from collections import Counter
+import requests
+import json
+URL = "http://127.0.0.1:8000/api/v1/Vrr_Geoip_Data/"
+r = requests.get(url = URL,)
+data=json.loads(r.content.decode('utf-8'))
 
-df = pd.read_excel('ptsc.xlsx')
-HNI = ['HNIP04801','HNIP31102','HNIP40201','HNIP46602','HNIP20201']
-df1 = pd.DataFrame()
-for i in HNI:
-    df1 = df1.append(df[df['Tiêu đề'].str.contains('HNIP04801', regex=True)])
+for i in data['results']:
+    if i['is_active'] == 1:
+        print (i)
 
-count = Counter(df1['Nguyên nhân chi tiết'])
-print (count)
+
